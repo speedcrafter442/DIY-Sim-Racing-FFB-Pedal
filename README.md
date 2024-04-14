@@ -59,13 +59,14 @@ A [Discord](https://discord.gg/j8QhD5hCv7) server has been created to allow join
 ## Electronics
 
 ## Control PCB
-The embedded code of this DIY FFB pedal runs on an ESP32 microcontroller. The PCB design was developed to prove the concept. It holds the ESP32, the ADC, a level shifter, and connectors. Currently, version 3 of this PCB design is used which introduced sensorless homing of the servo. The PCB design and pinout diagram can be found [here](Wiring/Esp32_V3). If you use Simucube wheelbase, you can use the D15 accessory port for input, detail was list [here](Wiring/PCB_analog_output)
+The embedded code of this DIY FFB pedal runs on an ESP32 microcontroller. The PCB design was developed as custom board for the prove of concept PCB from ChrGri. It holds the ESP32, the ADC, a level shifter, and connectors. Currently, version 1.4.1 of this PCB design is used which introduced sensorless homing of the servo. The PCB design and pinout diagram can be found [here](Wiring/Esp32_V3). Version 1.4.2 is in current development, to solve the automatic upload issues with the current UART bridge. The PCB also includes a CAN Bus transciver, two additonal loadcell ports for Heusinkveld Pedals and a ID switch to idetify the PCB on the CAN bus. Neither of these additions are currently supported in the main code. An Exampel how to connect the components to the PCB can be found [here](https://github.com/speedcrafter442/DIY-Sim-Racing-FFB-Pedal/tree/main/Wiring/PCB-V1.4.x)
+For all connectors a 4 or 5 pin XH style connector is used. 
 
 Here is an image of the plain PCB:
-![](Wiring/Esp32_V3/PCB_empty.jpeg)
+![](Wiring/PCB-V1.4.x/PCB_V1.4.1_.JPG)
 
-Here is an image of the assembled PCB:
-![](Wiring/Esp32_V3/PCB_assembled.jpg)
+Here is an image of the populated PCB:
+![](Wiring/PCB-V1.4.x/PCB_V1.4.1.JPG)
 
 
 ### Wiring
@@ -83,17 +84,18 @@ The PCB has three connectors with the following wiring:
 | Connector at PCB           |  Servo |
 :------------------------- | :-------------------------
 | Gnd| Gnd|
-| Tx| Rx|
+| Gnd| Gnd|
 | Rx| Tx|
+| Tx| Rx|
 
 #### Loadcell port 
 | Connector at PCB           |  Loadcell |
 :------------------------- | :-------------------------
-| 5V| V+|
-| Gnd| V-|
 | Gnd| Shield|
-| S+| S+|
-| S-| S-|
+| S+| Green |
+| S-| White |
+| Gnd| Black |
+| 5V| Red |
 
 #### Servo power port 
 It is recommended to use a Schottky diode in the positive line from the PSU to the servo. The plated side faces the servo.
@@ -109,16 +111,15 @@ Depending on the load direction, the servo will act as a generator. It will prod
 
 | Component           |  Link |
 :------------------------- | :-------------------------
-| SR5100 Schottky diode | [Amazon.de](https://www.amazon.de/Packung-20-SR5100-Schottky-Barriere-Gleichrichterdioden-DO-201AD/dp/B079KK7QL5/ref=sr_1_3?keywords=sr+5100+diode&qid=1691820234&sr=8-3) |
-| 100V 10kF capacitor| [Amazon.de](https://www.amazon.de/dp/B07QWTMKWZ?ref_=cm_sw_r_apan_dp_ANE55Z4BEQEJHQBQSDVM&language=de-DE) |
+| 100V 10kF capacitor| [Amazon.de](https://www.amazon.de/dp/B07QWTMKWZ) |
 
-To hold the components, a [power PCB](https://github.com/ChrGri/DIY-Sim-Racing-FFB-Pedal/tree/main/Wiring/PowerPcb) was developed, which also featured a port to hold XT30 connectors. The 
+To hold the components, a [power PCB](https://github.com/ChrGri/DIY-Sim-Racing-FFB-Pedal/tree/main/Wiring/PowerPcb) was developed.
 
 Here is an image of the plain PCB:
-![](Wiring/PowerPcb/front.svg)
+![](Wiring/PowerPcb/PSU_PCB_1.1.JPG)
 
 Here is an image of the assembled PCB:
-![](Wiring/PowerPcb/PCB_assembled.jpg)
+![](Wiring/PowerPcb/PSU_PCB_1.1_.JPG)
 
 
 A graph of the voltage fluctuations introduced by generative current flow from the servo can be seen here:
